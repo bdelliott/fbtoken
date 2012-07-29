@@ -26,7 +26,6 @@ def get_database_config():
     items = [(k.upper(),v) for (k,v)  in items]
     return {'default': dict(items)}
 
-    
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
