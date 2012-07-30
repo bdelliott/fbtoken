@@ -5,6 +5,16 @@
 <div id="fb-root"></div>
 
 <script>
+    function setToken(userId, expiresIn, accessToken) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+
+      var url = "{{ BASE_URL }}{% url set_token %}";
+      form.setAttribute("action", url);
+
+      var 
+    }
+
     window.fbAsyncInit = function() {
         FB.init({
             appId      : '{{ FACEBOOK_APP_ID }}', // App ID
@@ -15,7 +25,21 @@
         });
 
         // do login
-        FB.login();
+        FB.login(function(response) {
+          if (response.authResponse) {
+            console.log('Successful login.');
+            console.log(response.authResponse);
+            accessToken = response.authResponse['accessToken'];
+            expiresIn = response.authResponse['expiresIn'];
+            userId = response.authResponse['userId'];
+
+            console.log(accessToken);
+            setToken(userId, expiresIn, accessToken);
+
+          } else {
+            console.log('Login failure.');
+          }
+        });
     };
 
     // Load the SDK Asynchronously
