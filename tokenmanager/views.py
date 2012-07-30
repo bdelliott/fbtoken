@@ -21,3 +21,6 @@ def index(request):
     context = RequestContext(request)
     return render_to_response('tokenmanager/index.html', context)
 
+def token(request):
+    """Get or Set a token"""
+    return None

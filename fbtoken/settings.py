@@ -83,7 +83,7 @@ STATIC_ROOT = os.path.join(get_base_dir(), "staticfiles")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = BASE_URL+'/static/'
+STATIC_URL = config.get("DEFAULT", "static_url")
 
 # Additional locations of static files
 STATICFILES_DIRS = (
