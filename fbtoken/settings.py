@@ -57,14 +57,14 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -114,7 +114,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
@@ -208,3 +208,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # Facebook app settings
 FACEBOOK_APP_ID = config.get("facebook", "app_id")
 FACEBOOK_APP_SECRET = config.get("facebook", "app_secret")
+if config.has_option("facebook", "stub_api"):
+    FACEBOOK_STUB_API = config.getboolean("facebook", "stub_api")
+else:
+    FACEBOOK_STUB_API = False

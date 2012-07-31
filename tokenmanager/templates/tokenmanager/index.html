@@ -4,54 +4,93 @@
 
 <div id="fb-root"></div>
 
+{% if FACEBOOK_STUB_API %}
+<script src="{{ STATIC_URL }}facebookStubs.js"></script>
+{% endif %}
+
 <script>
-    function setToken(userId, expiresIn, accessToken) {
-      var form = document.createElement("form");
-      form.setAttribute("method", "post");
+    $(document).ready(function() {
+        {% if FACEBOOK_STUB_API %}
+        console.log("Local development - stubbing FB API");
+        initStubFacebookAPI();
+        {% else %}
+        console.log("Live environment");
+        initFacebookAPI();
+        {% endif %};
+    });
 
-      //var url = "{{ BASE_URL }}{% url token %}";
-      //form.setAttribute("action", url);
+    function initFacebookAPI() {
 
-      //var 
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '{{ FACEBOOK_APP_ID }}', // App ID
+                channelUrl : '{{ BASE_URL }}{% url channel %}', // Channel File
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+            });
+
+            postInit();
+       };
+
+        // Load the SDK Asynchronously
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+         }(document));
     }
 
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '{{ FACEBOOK_APP_ID }}', // App ID
-            channelUrl : '{{ BASE_URL }}{% url channel %}', // Channel File
-            status     : true, // check login status
-            cookie     : true, // enable cookies to allow the server to access the session
-            xfbml      : true  // parse XFBML
-        });
-
+    function postInit() {
         // do login
-        FB.login(function(response) {
-          if (response.authResponse) {
-            console.log('Successful login.');
-            console.log(response.authResponse);
-            accessToken = response.authResponse['accessToken'];
-            expiresIn = response.authResponse['expiresIn'];
-            userId = response.authResponse['userId'];
+        FB.login(loginCallback);
+    }
 
-            console.log(accessToken);
-            setToken(userId, expiresIn, accessToken);
+    function loginCallback(response) {
 
-          } else {
-            console.log('Login failure.');
-          }
+        if (response.authResponse) {
+            updateStatus("Successful login.");
+            setToken(response.authResponse);
+
+            //accessToken = response.authResponse['accessToken'];
+            //expiresIn = response.authResponse['expiresIn'];
+            //userId = response.authResponse['userId'];
+
+
+        } else {
+            updateStatus('Login failure');
+        }
+    }
+
+    function setToken(authResponse) {
+        // save auth token to server    
+        updateStatus("Saving token...");
+        $.ajax({
+            type: "post",
+            url: "{{ BASE_URL }}{% url token %}",
+            data: authResponse,
+            success: setTokenSuccess,
+            error: setTokenError,
+            //dataType: ??
         });
-    };
+    }
 
-    // Load the SDK Asynchronously
-    (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-     }(document));
+    function setTokenError(x) {
+        console.log(x);
+    }
+
+    function setTokenSuccess(x) {
+        console.log(x);
+    }
+
+    function updateStatus(msg) {
+        console.log(msg);
+        $("#fbstatus").html(msg);
+    }
 </script>
 
-Loading FB login stuff....
+<div id="fbstatus">Loading FB login stuff....</div>
 
 {% endblock %}

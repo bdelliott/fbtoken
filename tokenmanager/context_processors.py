@@ -9,5 +9,6 @@ def fb_settings(request):
     return {
         "FACEBOOK_APP_ID": settings.FACEBOOK_APP_ID,
         "FACEBOOK_APP_SECRET": settings.FACEBOOK_APP_SECRET,
+        "FACEBOOK_STUB_API": settings.FACEBOOK_STUB_API,
     }
 
