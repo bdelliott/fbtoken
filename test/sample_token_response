@@ -1,0 +1,5 @@
+bde@elliottsoft.com ~/webapps/fbtoken $ curl http://www.elliottsoft.com/fbtoken/token?user_id=1282166112
+{
+    "expires": "Tue 31 Jul 2012 12:00:00", 
+    "token": "AAAEvDjates0BAPepRr5E0E4CHSoxUmrgQMeD7QJawW6f7vtNdjW3dsJKYFWfHaFLUwp8Pts9q6D5AKWCaRfEUdMFSgMzR4MdV2O0UZCMehOXMDk13", 
+    "user_id": "1282166112"

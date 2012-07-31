@@ -15,7 +15,7 @@ function loginStub(callback) {
     credentials = {
         accessToken: "1234567890",
         expiresIn: "5500",
-        userId: "54321"
+        userID: "54321"
     }
 
     response = { authResponse: credentials };

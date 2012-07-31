@@ -1,12 +1,8 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>{% block title %}FB Token{% endblock %}</title>
-        <script src="{{ STATIC_URL }}jquery-1.7.2.js"></script>
-        <script>
-            function isLocal() {
-                return "{{ BASE_URL }}" == "http://localhost:8000"
-            }
-        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.2.min.js"></script>
     </head>
 
     <body>

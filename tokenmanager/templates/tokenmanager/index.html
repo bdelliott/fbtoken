@@ -8,7 +8,8 @@
 <script src="{{ STATIC_URL }}facebookStubs.js"></script>
 {% endif %}
 
-<script>
+<script type="text/javascript">
+
     $(document).ready(function() {
         {% if FACEBOOK_STUB_API %}
         console.log("Local development - stubbing FB API");
@@ -16,9 +17,8 @@
         {% else %}
         console.log("Live environment");
         initFacebookAPI();
-        {% endif %};
+        {% endif %}
     });
-
     function initFacebookAPI() {
 
         window.fbAsyncInit = function() {
@@ -78,11 +78,11 @@
     }
 
     function setTokenError(x) {
-        console.log(x);
+        updateStatus(x);
     }
 
     function setTokenSuccess(x) {
-        console.log(x);
+        updateStatus("Saved token.  Done!);
     }
 
     function updateStatus(msg) {

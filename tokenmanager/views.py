@@ -34,7 +34,7 @@ def token(request):
     if request.method == "POST":
         logger.debug("Saving token")
 
-        user_id = request.POST['userId']
+        user_id = request.POST['userID']
         expires_in = int(request.POST['expiresIn'])
         access_token = request.POST['accessToken']
 
