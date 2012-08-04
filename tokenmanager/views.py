@@ -51,6 +51,7 @@ def token(request):
     else:
         # just return latest token:
         user_id = request.GET['user_id']
+        logger.info("Retrieving token for %s" % user_id)
 
         try:
             token = models.Token.objects.filter(user_id=user_id).latest('created')
